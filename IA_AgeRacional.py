@@ -66,7 +66,7 @@ class Environment:
         return self.rendimiento
 
     def print_environment(self):
-        print("-----------------------------")
+        print("____________________________________________________________________________")
         for i in range(0, self.sizeX):
             print("|",end="")
             for j in range(0, self.sizeY):
@@ -75,6 +75,7 @@ class Environment:
                 else:
                     print(self.map[i][j],end="|")
             print("")
+        print("____________________________________________________________________________")
 
 #####################################################################
 class Agent:
@@ -146,6 +147,8 @@ class Agent:
                         if (self.periodo<0):
                             break    
                         env.print_environment()
+                        if (self.prespective(env)):
+                            self.suck(env)
                         time.sleep(self.sleepTime)
                         if (env.accept_action("down")):
                             self.down(env)
@@ -167,12 +170,15 @@ class Agent:
                             break
                         env.print_environment()
                         time.sleep(self.sleepTime)
+                        if (self.prespective(env)):
+                            self.suck(env)
                         if (env.accept_action("down")):
                             self.down(env)
                         else:
                             break 
                         if (self.periodo<0):
                             break
+                    break
             env.print_environment()
             time.sleep(self.sleepTime)
             if (self.periodo<0):
@@ -180,7 +186,7 @@ class Agent:
 
 
 
-env1 = Environment(30,30,0.5)
+env1 = Environment(20,20,0.5)
 A= Agent(env1)
 
 A.think(env1)
