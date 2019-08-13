@@ -2,12 +2,19 @@
 
 
 from random import randrange
+import time
 
 class Environment:
 
-    def __init__(self, sizeX, sizeY, init_posX, init_posY, dirt_rate):
-
-        self.map = [range(sizeX) for i in range(sizeY)]
+    def __init__(self, sizeX, sizeY, dirt_rate):
+        self.rendimiento = 0
+        self.posInitX = randrange(sizeX)
+        self.posInitY = randrange(sizeY)
+        self.posActX = self.posInitX
+        self.posActY = self.posInitY
+        self.map = [None] * sizeX
+        for i in range(sizeX):
+            self.map[i] = [None] * sizeY
         self.sizeX = sizeX
         self.sizeY = sizeY
         for i in range(0, self.sizeX):
@@ -18,52 +25,166 @@ class Environment:
                 else:
                     self.map[i][j] = 0
 
-
-    def accept_action(self, action):  # si la accion que va a realizar es valida , up down , I ,D 
-
+    def accept_action(self, action):  # si la accion que va a realizar es valida , up down , I ,D  
+        if (action == "L"):
+            if (self.posActY-1 >= 0):
+                return True
+            else:
+                return False
+        if (action == "R"):
+            if (self.posActY+1 <= self.sizeY-1):
+                return True
+            else:
+                return False
         if (action == "up"):
-            map[i][j-1]
+            if (self.posActX-1 >= 0):
+                return True
+            else:
+                return False
         if (action == "down"):
-            map[i][j+1]
-            
-        if (action == "D"):
-            map[i-1][j]
-        if (action == "I"):
-            map[i+1][j]
-
-
-        if (i<= self.sizeX and j <= self.sizeY):
-            return True
-        else:
-            return False
+            if (self.posActX+1 <= self.sizeX-1):
+                return True
+            else:
+                return False
 
     def is_dirty(self):
-        if (map[i][j]==1):
+        if (self.map[self.posActX][self.posActY]==1):
             return True
         else:
             return False
+
+    def clean(self):
+        self.map[self.posActX][self.posActY]=0
+        self.rendimiento = self.rendimiento +1
+
+    def actualizarPos(self,x,y):
+        self.posActX = x
+        self.posActY = y
+
     def get_performance(self):
-        
-        print()
+        print(self.rendimiento)
+        return self.rendimiento
+
     def print_environment(self):
+        print("-----------------------------")
         for i in range(0, self.sizeX):
+            print("|",end="")
             for j in range(0, self.sizeY):
-                print(self.map[i][j])
+                if (i== self.posActX and j == self.posActY):
+                    print("#",end="|")
+                else:
+                    print(self.map[i][j],end="|")
+            print("")
 
-
-
-class Agent:           
+#####################################################################
+class Agent:
+    sleepTime = 0.1           
     def __init__(self,env): #recibe como parámetro un objeto de la clase Environment
-    def up(self):
+        self.posX = env.posInitX
+        self.posY = env.posInitY
+        self.sizeX = env.sizeX
+        self.sizeY = env.sizeY
+        self.periodo = 1000
         
-    def down(self):  
-    def left(self):
-    def right(self):
-    def suck(self): # Limpia
-    def idle(self): # no hace nada
-    def prespective(self,env): #sensa el entorno si esta sucio y en que pocicion esta 
-    def think(self): # implementa las acciones a seguir por el agente
-        
+    def left(self,env):
+        self.posY = self.posY-1
+        self.periodo = self.periodo -1
+        env.actualizarPos(self.posX,self.posY)
 
-x = Environment(10,10,1,1,0.5)
-x.print_environment()
+    def right(self,env):
+        self.posY = self.posY+1  
+        self.periodo = self.periodo -1
+        env.actualizarPos(self.posX,self.posY)
+         
+    def up(self,env):
+        self.posX = self.posX-1
+        self.periodo = self.periodo -1
+        env.actualizarPos(self.posX,self.posY)
+
+    def down(self,env):
+        self.posX = self.posX+1
+        self.periodo = self.periodo -1
+        env.actualizarPos(self.posX,self.posY)
+        
+    def suck(self,env): # Limpia
+        env.clean()
+        self.periodo = self.periodo -1
+        
+    def idle(self): # no hace nada
+        print("Nada")
+
+    def prespective(self,env): #sensa el entorno si esta sucio y en que pocicion esta 
+        if (env.is_dirty()):
+            print("Esta sucio")
+            return True
+        else:
+            print("Esta limpio")
+            return False
+
+    def think(self,env): # implementa las acciones a seguir por el agente
+        while True:
+            if (self.prespective(env)):
+                self.suck(env)
+            if (env.accept_action("up")):
+                self.up(env)
+            else:
+                if (env.accept_action("L")):
+                    self.left(env)
+                else:
+                    while True:
+                        while True:
+                            if (self.periodo<0):
+                                break
+                            env.print_environment()
+                            time.sleep(self.sleepTime)
+                            if (self.prespective(env)):
+                                self.suck(env)
+                            if (env.accept_action("R")):
+                                self.right(env)
+                            else:
+                                break
+                        if (self.periodo<0):
+                            break    
+                        env.print_environment()
+                        time.sleep(self.sleepTime)
+                        if (env.accept_action("down")):
+                            self.down(env)
+                        else:
+                            break   
+
+                        while True:
+                            if (self.periodo<0):
+                                break
+                            env.print_environment()
+                            time.sleep(self.sleepTime)
+                            if (self.prespective(env)):
+                                self.suck(env)
+                            if (env.accept_action("L")):
+                                self.left(env)
+                            else:
+                                break  
+                        if (self.periodo<0):
+                            break
+                        env.print_environment()
+                        time.sleep(self.sleepTime)
+                        if (env.accept_action("down")):
+                            self.down(env)
+                        else:
+                            break 
+                        if (self.periodo<0):
+                            break
+            env.print_environment()
+            time.sleep(self.sleepTime)
+            if (self.periodo<0):
+                break
+
+
+
+env1 = Environment(30,30,0.5)
+A= Agent(env1)
+
+A.think(env1)
+print("############## Final ################")
+env1.print_environment()
+env1.get_performance()
+
