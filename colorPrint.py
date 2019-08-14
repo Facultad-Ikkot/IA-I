@@ -23,9 +23,4 @@ def prCyan(skk): print("\033[96m{}\033[00m" .format(skk), end="|")
 def prLightGray(skk): print("\033[97m{}\033[00m" .format(skk), end="|") 
 def prBlack(skk): print("\033[98m{}\033[00m" .format(skk)) 
   
-prCyan("Hello World, ") 
-prYellow("It's") 
-prGreen("Geeks") 
-prRed("For") 
-prGreen("Geeks") 
 

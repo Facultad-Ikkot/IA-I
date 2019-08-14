@@ -61,9 +61,18 @@ class Environment:
         self.map[self.posActX][self.posActY] = 2
         self.rendimiento = self.rendimiento + 1
 
-    def actualizarPos(self, x, y):
-        self.posActX = x
-        self.posActY = y
+    def actualizarPos(self, action):
+        if (action == "L"):
+            self.posActY = self.posActY-1
+        elif (action == "R"):
+            self.posActY = self.posActY+1
+        elif (action == "up"):
+            self.posActX = self.posActX-1
+        elif (action == "down"):
+            self.posActX = self.posActX+1
+        else:
+            pass
+
 
     def get_performance(self):
         print(self.rendimiento)
@@ -85,6 +94,13 @@ class Environment:
                         print(self.map[i][j], end="|")
             print("")
         print("____________________________________________________________________")
+
+    def posX(self):
+        return self.posActX
+
+    def posY(self):
+        return self.posActY
+   
    
         
 ######################################################################################
@@ -92,31 +108,23 @@ class Environment:
 class Agent:
     sleepTime = 0.6
     def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
-        self.posX = env.posInitX
-        self.posY = env.posInitY
-        self.sizeX = env.sizeX
-        self.sizeY = env.sizeY
-        self.periodo = 1000
+        self.periodo = 10000
 
     def left(self, env):
-        self.posY = self.posY-1
         self.periodo = self.periodo - 1
-        env.actualizarPos(self.posX, self.posY)
+        env.actualizarPos("L")
 
     def right(self, env):
-        self.posY = self.posY+1
         self.periodo = self.periodo - 1
-        env.actualizarPos(self.posX, self.posY)
+        env.actualizarPos("R")
 
     def up(self, env):
-        self.posX = self.posX-1
         self.periodo = self.periodo - 1
-        env.actualizarPos(self.posX, self.posY)
+        env.actualizarPos("up")
 
     def down(self, env):
-        self.posX = self.posX+1
         self.periodo = self.periodo - 1
-        env.actualizarPos(self.posX, self.posY)
+        env.actualizarPos("down")
 
     def suck(self, env):  # Limpia
         env.clean()
@@ -201,16 +209,92 @@ class Agent:
                 break
 
 
+    def prespectivePosX(self, env):  # sensa el entorno si esta sucio y en que pocicion esta
+        return env.posActX
+
+    def prespectivePosY(self, env):  # sensa el entorno si esta sucio y en que pocicion esta
+        return env.posActY
+
+    def prespectiveSizeX(self,env):
+        return env.sizeX
+
+    def prespectiveSizeY(self,env):
+        return env.sizeY
+        
+    def think2(self, env):  # implementa las acciones a seguir por el agente
+        if (self.prespective(env)):
+            self.suck(env)
+        while True:
+            if (self.prespectivePosX(env) >= 1):
+                self.up(env)
+            else:
+                if (self.prespectivePosY(env) >= 1):
+                    self.left(env)
+                else:
+                    while True:
+                        while True:
+                            if (self.prespectivePosY(env) != self.prespectiveSizeY(env)-1):
+                                self.right(env)
+                            else:
+                                break
+                            if (self.thinkAux(env)):
+                                break
+                        if (self.prespectivePosX(env) != self.prespectiveSizeX(env)-1):
+                            self.down(env)
+                        else:
+                            break
+                        if (self.thinkAux(env)):
+                            break
+                        while True:
+                            if (self.prespectivePosY(env) != 0):
+                                self.left(env)
+                            else:
+                                break
+                            if (self.thinkAux(env)):
+                                break                    
+                        if (self.prespectivePosX(env) != self.prespectiveSizeX(env)-1):
+                            self.down(env)
+                        else:
+                            break
+                        if (self.thinkAux(env)):
+                            break
+                    break
+            if (self.thinkAux(env)):
+                break
+
+# SIn estados ni memoria
+    def think3(self, env):  
+            if (self.prespective(env)):
+                self.suck(env)
+            if (self.prespectivePosY(env) != self.prespectiveSizeY(env)-1 and (self.prespectivePosX(env) % 2) == 1) :
+                self.right(env)
+            elif ((self.prespectivePosX(env) == self.prespectiveSizeX(env)-1) and (self.prespectivePosY(env) == self.prespectiveSizeY(env)-1)):
+                self.idle()
+            elif ((self.prespectivePosX(env) % 2) == 1 ):
+                self.down(env)
+            elif (self.prespectivePosY(env) != 0):
+                self.left(env)
+            elif (self.prespectivePosX(env) != self.prespectiveSizeX(env)-1):
+                self.down(env)
+            self.thinkAux(env)
+            
+            
+            
+            
+        
 
         
 ######################################################################################
 ######################################################################################
 
-env1 = Environment(5, 5, 0.4)
+env1 = Environment(8, 8, 0.4)
 A = Agent(env1)
 
 #A.thinkAleatorio(env1)
-A.think(env1)
+#A.think(env1)
+#A.think2(env1)
+while True:
+    A.think3(env1)
 
 
 print("################################ Final ################################")
