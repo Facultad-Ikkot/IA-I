@@ -1,6 +1,5 @@
 # https://docs.google.com/document/d/1eP3aCyTWuTCbYMwf3inNHd7AIIpYHyb_PEj-aXYc1xU/edit
 
-
 from random import randrange
 import time
 import colorPrint
@@ -51,7 +50,6 @@ class Environment:
                 return False
 
     def is_dirty(self):
-        
         if (self.map[self.posActX][self.posActY] == 1):
             return True
         else:
@@ -89,9 +87,7 @@ class Environment:
         print("____________________________________________________________________")
    
         
-
-#####################################################################
-
+######################################################################################
 
 class Agent:
     sleepTime = 0.6
@@ -136,9 +132,9 @@ class Agent:
             return False
 
     def think(self, env):  # implementa las acciones a seguir por el agente
+        if (self.prespective(env)):
+            self.suck(env)
         while True:
-            if (self.prespective(env)):
-                self.suck(env)
             if (env.accept_action("up")):
                 self.up(env)
             else:
@@ -147,54 +143,44 @@ class Agent:
                 else:
                     while True:
                         while True:
-                            if (self.periodo < 0):
-                                break
-                            env.print_environment()
-                            time.sleep(self.sleepTime)
-                            if (self.prespective(env)):
-                                self.suck(env)
                             if (env.accept_action("R")):
                                 self.right(env)
                             else:
                                 break
-                        if (self.periodo < 0):
-                            break
-                        env.print_environment()
-                        if (self.prespective(env)):
-                            self.suck(env)
-                        time.sleep(self.sleepTime)
+                            if (self.thinkAux(env)):
+                                break
                         if (env.accept_action("down")):
                             self.down(env)
                         else:
                             break
+                        if (self.thinkAux(env)):
+                            break
                         while True:
-                            if (self.periodo < 0):
-                                break
-                            env.print_environment()
-                            time.sleep(self.sleepTime)
-                            if (self.prespective(env)):
-                                self.suck(env)
                             if (env.accept_action("L")):
                                 self.left(env)
                             else:
                                 break
-                        if (self.periodo < 0):
-                            break
-                        env.print_environment()
-                        time.sleep(self.sleepTime)
-                        if (self.prespective(env)):
-                            self.suck(env)
+                            if (self.thinkAux(env)):
+                                break                    
                         if (env.accept_action("down")):
                             self.down(env)
                         else:
                             break
-                        if (self.periodo < 0):
+                        if (self.thinkAux(env)):
                             break
                     break
-            env.print_environment()
-            time.sleep(self.sleepTime)
-            if (self.periodo < 0):
+            if (self.thinkAux(env)):
                 break
+
+    def thinkAux(self,env):
+        if (self.prespective(env)):
+            self.suck(env)
+        env.print_environment()
+        time.sleep(self.sleepTime)
+        if (self.periodo < 0):
+            return True 
+        else:
+            return False
 
     def thinkAleatorio(self, env):
         while True:
@@ -211,19 +197,22 @@ class Agent:
             if (aux == 3):
                 if (env.accept_action("L")):
                     self.left(env)
-            if (self.prespective(env)):
-                self.suck(env)
-            env.print_environment()
-            time.sleep(self.sleepTime)
-            if (self.periodo < 0):
+            if (self.thinkAux(env)):
                 break
 
 
-env1 = Environment(5, 5, 0.5)
+
+        
+######################################################################################
+######################################################################################
+
+env1 = Environment(5, 5, 0.4)
 A = Agent(env1)
 
-A.thinkAleatorio(env1)
-#A.think(env1)
-print("############## Final ################")
+#A.thinkAleatorio(env1)
+A.think(env1)
+
+
+print("################################ Final ################################")
 env1.print_environment()
 env1.get_performance()
