@@ -262,7 +262,7 @@ class Agent:
             if (self.thinkAux(env)):
                 break
 
-# SIn estados ni memoria
+# SIn estados ni memoriaf
     def think3(self, env):  
             if (self.prespective(env)):
                 self.suck(env)
@@ -282,7 +282,7 @@ class Agent:
             
             
         
-
+#
         
 ######################################################################################
 ######################################################################################
@@ -293,9 +293,10 @@ A = Agent(env1)
 #A.thinkAleatorio(env1)
 #A.think(env1)
 #A.think2(env1)
-while True:
-    A.think3(env1)
 
+while True:
+
+    A.think3(env1)
 
 print("################################ Final ################################")
 env1.print_environment()
