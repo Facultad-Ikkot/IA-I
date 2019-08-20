@@ -262,8 +262,8 @@ class Agent:
             if (self.thinkAux(env)):
                 break
 
-# SIn estados ni memoriaf
-    def think3(self, env):  
+# Sin estados ni memoria 
+    def thinkSinMem(self, env):  
             if (self.prespective(env)):
                 self.suck(env)
             if (self.prespectivePosY(env) != self.prespectiveSizeY(env)-1 and (self.prespectivePosX(env) % 2) == 1) :
@@ -278,12 +278,8 @@ class Agent:
                 self.down(env)
             self.thinkAux(env)
             
-            
-            
-            
-        
-#
-        
+             
+
 ######################################################################################
 ######################################################################################
 
@@ -295,8 +291,7 @@ A = Agent(env1)
 #A.think2(env1)
 
 while True:
-
-    A.think3(env1)
+    A.thinkSinMem(env1)
 
 print("################################ Final ################################")
 env1.print_environment()
