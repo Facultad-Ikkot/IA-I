@@ -1,19 +1,8 @@
 
-
-
-
- 
 from colorama import init 
-
 #init(autoreset=True)
 init()
-""" 
- 
-from colorama import Fore, Back, Style 
-print(Fore.RED + 'some red text') 
-"""
-# Python program to print 
-# colored text and background 
+
 def prRed(skk): print("\033[91m{}\033[00m" .format(skk)) 
 def prGreen(skk): print("\033[92m{}\033[00m" .format(skk)) 
 def prYellow(skk): print("\033[93m{}\033[00m" .format(skk)) 
