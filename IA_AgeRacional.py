@@ -117,7 +117,7 @@ class AgentAleatorio(Agent):
 class AgentSinEstado(Agent):
     def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
         Agent.__init__(self,env)
-# Sin estados ni memoria 
+    #Sin estados ni memoria 
     def thinkSinMem(self, env):  
             if (self.prespective(env)):
                 self.suck(env)
@@ -142,7 +142,7 @@ class AgentSinEstado(Agent):
 ######################################################################################
 ######################################################################################
 
-env1 = Environment(10, 10, 0.4)
+env1 = Environment(8, 8, 0.4)
 
 agenMem = AgentConMeoria(env1)
 agenAlea = AgentAleatorio(env1)
@@ -150,10 +150,10 @@ agenSin = AgentSinEstado(env1)
 
 
 while True:
-#    agenSin.thinkSinMem(env1)
-#    agenAlea.thinkAleatorio(env1)
-    aux=agenMem.think(env1)
-    #agenMem.think2(env1)
+    aux=agenSin.thinkSinMem(env1)
+    #aux=agenAlea.thinkAleatorio(env1)
+    #aux=agenMem.think(env1)
+    #aux=agenMem.think2(env1)
     if (aux == True):
         break
 
