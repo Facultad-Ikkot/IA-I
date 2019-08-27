@@ -2,6 +2,7 @@ from random import randrange
 import colorPrint
 import time
 
+
 class Environment:
     def __init__(self, sizeX, sizeY, dirt_rate):
         self.rendimiento = 0
@@ -79,7 +80,7 @@ class Environment:
             print("|", end="")
             for j in range(0, self.sizeY):
                 if (i == self.posActX and j == self.posActY):
-                    print("\033[91m#\033[00m" , end="|") 
+                    print("\033[91m#\033[00m", end="|")
                 else:
                     if (self.map[i][j] == 2):
                         colorPrint.prCyan("0")
@@ -95,14 +96,14 @@ class Environment:
 
     def posY(self):
         return self.posActY
-   
-   
-        
+
+
 ######################################################################################
 
 
 class Agent:
     sleepTime = 0.5
+
     def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
         self.periodo = 10000
 
@@ -141,18 +142,18 @@ class Agent:
     def prespectivePosY(self, env):
         return env.posActY
 
-    def prespectiveSizeX(self,env):
+    def prespectiveSizeX(self, env):
         return env.sizeX
 
-    def prespectiveSizeY(self,env):
+    def prespectiveSizeY(self, env):
         return env.sizeY
-    
-    def thinkAux(self,env):
+
+    def thinkAux(self, env):
         if (self.prespective(env)):
             self.suck(env)
         env.print_environment()
         time.sleep(self.sleepTime)
         if (self.periodo < 0):
-            return True 
+            return True
         else:
             return False

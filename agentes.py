@@ -1,14 +1,13 @@
 # https://docs.google.com/document/d/1eP3aCyTWuTCbYMwf3inNHd7AIIpYHyb_PEj-aXYc1xU/edit
 
-
-from classMain import Agent,Environment
+from classMain import Agent, Environment
 import time
 from random import randrange
 
 
 class AgentConMeoria(Agent):
     def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
-        Agent.__init__(self,env)
+        Agent.__init__(self, env)
 
     def think(self, env):  # implementa las acciones a seguir por el agente
         if (self.prespective(env)):
@@ -40,7 +39,7 @@ class AgentConMeoria(Agent):
                             else:
                                 break
                             if (self.thinkAux(env)):
-                                break                    
+                                break
                         if (env.accept_action("down")):
                             self.down(env)
                         else:
@@ -51,7 +50,7 @@ class AgentConMeoria(Agent):
             if (self.thinkAux(env)):
                 break
         return True
-      
+
     def think2(self, env):  # implementa las acciones a seguir por el agente
         if (self.prespective(env)):
             self.suck(env)
@@ -82,7 +81,7 @@ class AgentConMeoria(Agent):
                             else:
                                 break
                             if (self.thinkAux(env)):
-                                break                    
+                                break
                         if (self.prespectivePosX(env) != self.prespectiveSizeX(env)-1):
                             self.down(env)
                         else:
@@ -94,9 +93,11 @@ class AgentConMeoria(Agent):
                 break
         return True
 
+
 class AgentAleatorio(Agent):
     def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
-        Agent.__init__(self,env)
+        Agent.__init__(self, env)
+
     def thinkAleatorio(self, env):
         aux = randrange(4)
         if (aux == 0):
@@ -112,31 +113,29 @@ class AgentAleatorio(Agent):
             if (env.accept_action("L")):
                 self.left(env)
         return self.thinkAux(env)
- 
-            
+
+
 class AgentSinEstado(Agent):
     def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
-        Agent.__init__(self,env)
-    #Sin estados ni memoria 
-    def thinkSinMem(self, env):  
-            if (self.prespective(env)):
-                self.suck(env)
-            if (self.prespectivePosY(env) != self.prespectiveSizeY(env)-1 and (self.prespectivePosX(env) % 2) == 1) :
-                self.right(env)
-            elif ((self.prespectivePosX(env) == self.prespectiveSizeX(env)-1) and (self.prespectivePosY(env) == self.prespectiveSizeY(env)-1)):
-                self.idle()
-            elif ((self.prespectivePosX(env) % 2) == 1 ):
-                self.down(env)
-            elif (self.prespectivePosY(env) != 0):
-                self.left(env)
-            elif (self.prespectivePosX(env) != self.prespectiveSizeX(env)-1):
-                self.down(env)
-            env.print_environment()
-            time.sleep(self.sleepTime)
-            if (self.periodo < 0):
-                return True 
-            else:
-                return False
-            
+        Agent.__init__(self, env)
+    # Sin estados ni memoria
 
-
+    def thinkSinMem(self, env):
+        if (self.prespective(env)):
+            self.suck(env)
+        if (self.prespectivePosY(env) != self.prespectiveSizeY(env)-1 and (self.prespectivePosX(env) % 2) == 1):
+            self.right(env)
+        elif ((self.prespectivePosX(env) == self.prespectiveSizeX(env)-1) and (self.prespectivePosY(env) == self.prespectiveSizeY(env)-1)):
+            self.idle()
+        elif ((self.prespectivePosX(env) % 2) == 1):
+            self.down(env)
+        elif (self.prespectivePosY(env) != 0):
+            self.left(env)
+        elif (self.prespectivePosX(env) != self.prespectiveSizeX(env)-1):
+            self.down(env)
+        env.print_environment()
+        time.sleep(self.sleepTime)
+        if (self.periodo < 0):
+            return True
+        else:
+            return False

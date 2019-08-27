@@ -1,5 +1,6 @@
 
-from agentes import *
+from agentes import AgentConMeoria, AgentAleatorio, AgentSinEstado
+from classMain import Environment
 
 ######################################################################################
 ######################################################################################
@@ -12,10 +13,10 @@ agenSin = AgentSinEstado(env1)
 
 
 while True:
-    #aux=agenSin.thinkSinMem(env1)
-    #aux=agenAlea.thinkAleatorio(env1)
-    aux=agenMem.think(env1)
-    #aux=agenMem.think2(env1)
+    # aux=agenSin.thinkSinMem(env1)
+    # aux=agenAlea.thinkAleatorio(env1)
+    aux = agenMem.think(env1)
+    # aux=agenMem.think2(env1)
     if (aux == True):
         break
 
