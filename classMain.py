@@ -23,7 +23,6 @@ class Environment:
                 else:
                     self.map[i][j] = 0
 
-    # si la accion que va a realizar es valida , up down , I ,D
     def accept_action(self, action):
         if (action == "L"):
             if (self.posActY-1 >= 0):
@@ -104,7 +103,7 @@ class Environment:
 class Agent:
     sleepTime = 0.5
 
-    def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
+    def __init__(self, env):
         self.periodo = 10000
 
     def left(self, env):
@@ -123,14 +122,14 @@ class Agent:
         self.periodo = self.periodo - 1
         env.actualizarPos("down")
 
-    def suck(self, env):  # Limpia
+    def suck(self, env):
         env.clean()
         self.periodo = self.periodo - 1
 
-    def idle(self):  # no hace nada
+    def idle(self):
         print("Nada")
 
-    def prespective(self, env):  # sensa el entorno si esta sucio y en que pocicion esta
+    def prespective(self, env):
         if (env.is_dirty()):
             return True
         else:

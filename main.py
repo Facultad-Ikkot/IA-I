@@ -3,7 +3,6 @@ from agentes import AgentConMeoria, AgentAleatorio, AgentSinEstado
 from classMain import Environment
 
 ######################################################################################
-######################################################################################
 
 env1 = Environment(8, 8, 0.4)
 

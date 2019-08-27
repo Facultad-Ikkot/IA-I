@@ -6,10 +6,10 @@ from random import randrange
 
 
 class AgentConMeoria(Agent):
-    def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
+    def __init__(self, env):
         Agent.__init__(self, env)
 
-    def think(self, env):  # implementa las acciones a seguir por el agente
+    def think(self, env):
         if (self.prespective(env)):
             self.suck(env)
         while True:
@@ -51,7 +51,7 @@ class AgentConMeoria(Agent):
                 break
         return True
 
-    def think2(self, env):  # implementa las acciones a seguir por el agente
+    def think2(self, env):
         if (self.prespective(env)):
             self.suck(env)
         while True:
@@ -95,7 +95,7 @@ class AgentConMeoria(Agent):
 
 
 class AgentAleatorio(Agent):
-    def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
+    def __init__(self, env):
         Agent.__init__(self, env)
 
     def thinkAleatorio(self, env):
@@ -116,9 +116,8 @@ class AgentAleatorio(Agent):
 
 
 class AgentSinEstado(Agent):
-    def __init__(self, env):  # recibe como parámetro un objeto de la clase Environment
+    def __init__(self, env):
         Agent.__init__(self, env)
-    # Sin estados ni memoria
 
     def thinkSinMem(self, env):
         if (self.prespective(env)):
