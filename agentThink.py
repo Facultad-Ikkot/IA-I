@@ -1,7 +1,4 @@
-# https://docs.google.com/document/d/1eP3aCyTWuTCbYMwf3inNHd7AIIpYHyb_PEj-aXYc1xU/edit
-
-from classMain import Agent, Environment
-import time
+from agent import Agent
 from random import randrange
 
 
@@ -98,7 +95,7 @@ class AgentAleatorio(Agent):
     def __init__(self, env):
         Agent.__init__(self, env)
 
-    def thinkAleatorio(self, env):
+    def think(self, env):
         aux = randrange(4)
         if (aux == 0):
             if (env.accept_action("up")):
@@ -119,9 +116,7 @@ class AgentSinEstado(Agent):
     def __init__(self, env):
         Agent.__init__(self, env)
 
-    def thinkSinMem(self, env):
-        if (self.prespective(env)):
-            self.suck(env)
+    def think(self, env):
         if (self.prespectivePosY(env) != self.prespectiveSizeY(env)-1 and (self.prespectivePosX(env) % 2) == 1):
             self.right(env)
         elif ((self.prespectivePosX(env) == self.prespectiveSizeX(env)-1) and (self.prespectivePosY(env) == self.prespectiveSizeY(env)-1)):
@@ -132,9 +127,5 @@ class AgentSinEstado(Agent):
             self.left(env)
         elif (self.prespectivePosX(env) != self.prespectiveSizeX(env)-1):
             self.down(env)
-        env.print_environment()
-        time.sleep(self.sleepTime)
-        if (self.periodo < 0):
-            return True
-        else:
-            return False
+        return self.thinkAux(env)
+
