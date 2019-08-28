@@ -4,7 +4,7 @@ class Agent:
     sleepTime = 0.5
 
     def __init__(self, env):
-        self.periodo = 10000
+        self.periodo = 1000
 
     def left(self, env):
         self.periodo = self.periodo - 1
@@ -27,7 +27,8 @@ class Agent:
         self.periodo = self.periodo - 1
 
     def idle(self):
-        print("Nada")
+        self.periodo = self.periodo - 1
+        #print("Nada")
 
     def prespective(self, env):
         if (env.is_dirty()):
@@ -48,10 +49,12 @@ class Agent:
         return env.sizeY
 
     def thinkAux(self, env):
+        aux = False
         if (self.prespective(env)):
             self.suck(env)
-        env.print_environment()
-        time.sleep(self.sleepTime)
+        if (aux == True):
+            env.print_environment()
+            time.sleep(self.sleepTime)
         if (self.periodo < 0):
             return True
         else:

@@ -1,9 +1,10 @@
-from random import randrange
+from random import randrange ,seed
 import colorPrint
 
 
 class Environment:
     def __init__(self, sizeX, sizeY, dirt_rate):
+        seed( 24324 )
         self.rendimiento = 0
         self.posInitX = randrange(sizeX)
         self.posInitY = randrange(sizeY)

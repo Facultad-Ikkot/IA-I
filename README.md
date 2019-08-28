@@ -13,6 +13,12 @@ La estrategia de resolución fueron:
   1. Cuando **choca** contra una pared cambiar de dirección.
   2. Teniendo en cuenta el **tamaño** del entorno, cuando llega a un borde cambia de dirección.
 
+## Tablas
+#### Agente sin estados
+![](imAl.png)
+#### Agente aleatorio
+![](imSin.png)
+
 ## Preguntas
 
 1. Considere una versión modificada del entorno de la aspiradora del Ejercicio 2.7, en el que se penalice al agente con un punto en cada movimiento.

@@ -1,9 +1,8 @@
-
 from agentThink import AgentConMeoria, AgentAleatorio, AgentSinEstado
 from environment import Environment
 
 
-env1 = Environment(8, 8, 0.4)
+env1 = Environment(64, 64, 0.4)
 
 agenMem = AgentConMeoria(env1)
 agenAlea = AgentAleatorio(env1)
@@ -23,5 +22,5 @@ while True:
         break
 
 print("################################ Final ################################")
-env1.print_environment()
+#env1.print_environment()
 env1.get_performance()
