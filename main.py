@@ -2,13 +2,13 @@ from agentThink import AgentConMeoria, AgentAleatorio, AgentSinEstado
 from environment import Environment
 
 
-env1 = Environment(64, 64, 0.4)
+env1 = Environment(16, 16, 0.4)
 
 agenMem = AgentConMeoria(env1)
 agenAlea = AgentAleatorio(env1)
 agenSin = AgentSinEstado(env1)
 
-c = 1
+c = 2
 while True:
     if(c == 1):
         aux = agenSin.think(env1)
@@ -22,5 +22,5 @@ while True:
         break
 
 print("################################ Final ################################")
-#env1.print_environment()
+env1.print_environment()
 env1.get_performance()

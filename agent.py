@@ -1,7 +1,7 @@
 import time
 
 class Agent:
-    sleepTime = 0.5
+    sleepTime = 0.6
 
     def __init__(self, env):
         self.periodo = 1000
@@ -49,7 +49,7 @@ class Agent:
         return env.sizeY
 
     def thinkAux(self, env):
-        aux = False
+        aux = True
         if (self.prespective(env)):
             self.suck(env)
         if (aux == True):
