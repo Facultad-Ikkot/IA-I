@@ -14,7 +14,7 @@ La estrategia de resolución fueron:
   2. Teniendo en cuenta el **tamaño** del entorno, cuando llega a un borde cambia de dirección.
 
 ## Preguntas
-
+__hola__
 1. Considere una versión modificada del entorno de la aspiradora del Ejercicio 2.7, en el que se penalice al agente con un punto en cada movimiento.
     - ¿Puede un agente reactivo simple ser perfectamente racional en este medio? Explíquese. 
       - No seria racional, ya que al no poseer una forma de guardar por donde a pasado el agente y al tener una penalización por movimiento, repetiría infinitamente el camino elegido produciendo un rendimiento negativo.  
