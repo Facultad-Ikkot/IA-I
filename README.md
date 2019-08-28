@@ -2,7 +2,7 @@
 
  # IA TP 2
 Este trabajo practico se realizo respondiendo estas [consignas](https://docs.google.com/document/d/1eP3aCyTWuTCbYMwf3inNHd7AIIpYHyb_PEj-aXYc1xU/edit)
-* * *
+
 ## Implementación 
 Para la implementación se creo una clase **Environment** siguiendo las pautas de la interfaz propuesta. Luego se creo una clase padre llamada **Agent** que se utilizo para que las subclases de **AgenteConMemoria, AgenteSinEstado y AgenteAleatorio** heredaran de **Agente** cambiando en cada subclase el método `think()`.
 
@@ -12,7 +12,7 @@ La estrategia de resolución fueron:
 - AgenteConMemoria: Dirigir al agenta a la **posición (0,0)** y luego recorrer en zig-zag, utilizando dos métodos:
   1. Cuando **choca** contra una pared cambiar de dirección.
   2. Teniendo en cuenta el **tamaño** del entorno, cuando llega a un borde cambia de dirección.
-***
+
 ## Preguntas
 
 1. Considere una versión modificada del entorno de la aspiradora del Ejercicio 2.7, en el que se penalice al agente con un punto en cada movimiento.
