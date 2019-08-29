@@ -15,9 +15,9 @@ La estrategia de resolución fueron:
 
 ## Tablas
 #### Agente sin estados
-![](imAl.png)
-#### Agente aleatorio
 ![](imSin.png)
+#### Agente aleatorio
+![](imAl.png)
 
 ## Preguntas
 
