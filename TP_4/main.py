@@ -4,7 +4,7 @@ from random import randrange, seed
 import colorPrint
 
 
-#seed(121)
+#seed(12313)
 def crear_mapa(size):
     map = [None] * size
     for i in range(size):
@@ -46,9 +46,13 @@ def print_map2(size, map):
 
 def horizontal(size, mapa, posY):
     cont = 0
+    aux = False
     for i in range(0, size):
         if (mapa[i][posY] == 1):
+            aux = True
             cont = cont+1
+    if (aux == True):
+        cont = cont -1
     return cont
 
 
@@ -106,12 +110,11 @@ def diagonal_2(size, map, posX, posY):
     return cont
 
 
-def confrontacion(size, mapa, posX, posY):
+def confrontacion(size, mapa, posX, posY, reina):
     hor = horizontal(size, mapa, posY)
-    ver = vertical(size, mapa, posX)
     dig1 = diagonal_1(size, mapa, posX, posY)
     dig2 = diagonal_2(size, mapa, posX, posY)
-    aux = hor+ver+dig1+dig2
+    aux = dig1 + dig2+hor
     return aux
 
 
@@ -121,59 +124,107 @@ def matrizEne(size, mapa):
         mapaF[i] = [None] * size
     for i in range(0, size):
         for j in range(0, size):
-            mapaF[i][j] = confrontacion(size, mapa, i, j)
+            if (mapa[i][j] == 1):
+                mapaF[i][j] = confrontacion(size, mapa, i, j, True)
+            else:
+                mapaF[i][j] = confrontacion(size, mapa, i, j, False)
     return mapaF
 
-def minimo(size,mapa):
-    minimo=mapa[0][0]
-    actX=0
-    actY=0
-    for i in range(0,size):
-        for j in range(0,size):
-            if (mapa[i][j] < minimo):
-                minimo=mapa[i][j]
-                actX=i
-                actY=j
-    print(minimo,"h",actX,actY)
-    return (actX,actY)
 
-def buscar_reina(size,mapa,posY):
-    for i in range(0,size):
-        print(mapa[posY][i])
-        if (mapa[posY][i]==1):
+def minimo(size, mapa):
+    minimo = mapa[0][0]
+    actX = 0
+    actY = 0
+    i = randrange(size)
+    for j in range(0, size):
+        if (mapa[i][j] <= minimo):
+            minimo = mapa[i][j]
+            actX = i
+            actY = j
+    return (actX, actY)
+
+
+def buscar_reina(size, mapa, posY):
+    for i in range(0, size):
+        if (mapa[posY][i] == 1):
             break
     return i
 
-def comprobarReina(size,mapa):
-    aux=0
-    for i in range(0,size):
-        for j in range(0,size):
-            if (mapa[i][j]==1):
-                aux= aux +confrontacion(size,mapa,i,j)
+
+def comprobarReina(size, mapa,val):
+    aux = 0
+    for i in range(0, size):
+        aux2 = False
+        for j in range(0, size):
+            if (val == j):
+                aux2 = True
+                aux = aux + confrontacion(size, mapa, i, j, True)
+            elif (mapa[i][j] == 1 and aux2 == False):
+                aux = aux + confrontacion(size, mapa, i, j, True)
+    return aux
+
+def comprobarReinaFin(size, mapa):
+    aux = 0
+    for i in range(0, size):
+        for j in range(0, size):
+            if (mapa[i][j] == 1):
+                aux = aux + confrontacion(size, mapa, i, j, True)
     return aux
 
 
-def think(size,mapa):
-    mapaEn=matrizEne(size, mapa)
+def reinaAmenaza(size, mapa):
+    mapaF = [None] * size
+    for i in range(size):
+        mapaF[i] = [None] * size
+    for i in range(0, size):
+        for j in range(0, size): 
+            mapTem= copiarMatriz(size,mapa,i)
+            mapTem[i][j] = 1
+            mapaF[i][j] = comprobarReina(size, mapTem,j)
+            if (mapa[i][j]==1):
+                mapaF[i][j] = 100
+
+            
+    return mapaF
+
+def copiarMatriz(size,mapa,val):
+    mapaF = [None] * size
+    for i in range(size):
+        mapaF[i] = [None] * size
+    for i in range(0, size):
+        for j in range(0, size):
+            if (i == val):
+                mapaF[i][j] = 0 
+            else:
+                mapaF[i][j] = mapa[i][j] 
+
+    return mapaF
+
+
+
+def think(size, mapa):
+    mapaEn = reinaAmenaza(size, mapa)
     print_map2(size, mapaEn)
-    (actX,actY)=minimo(size,mapaEn)
-    i=buscar_reina(size,mapa,actX)
-    print(actX,actY,i)
+    (actX, actY) = minimo(size, mapaEn)
+    i = buscar_reina(size, mapa, actX)
+    print("coord", actX, actY, i)
     mapa[actX][i] = 0
-    mapa[actX][actY]=1
-    print_map(size,mapa)
+    mapa[actX][actY] = 1
+    print_map(size, mapa)
     return mapa
-
-
-
 
 
 size = 6
 mapa = crear_mapa(size)
 
 print_map(size, mapa)
+cont=0
+
 while True:
+    cont = cont +1
     mapa = think(size,mapa)
-    print(comprobarReina(size,mapa))
-
-
+    aux = comprobarReinaFin(size,mapa)
+    print(aux)
+    
+    if (aux == 0 or cont > 10000):
+        break
