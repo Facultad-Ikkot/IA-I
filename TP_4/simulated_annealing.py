@@ -17,13 +17,13 @@ def probabilidad(mapa,mapaTem,contador):
     enemigosMap=comprobarReinaFin(size, mapa)
     enemigosMapTem=comprobarReinaFin(size, mapaTem)
     if(enemigosMap>enemigosMapTem):
-        return True
+        return True 
     else:
         aux= randrange(100)
         if (aux<funcionProbabilidad(contador)):
-            return False
+            return True
         else:
-            return True 
+            return False 
 
 def funcionProbabilidad(x):
     y = (10000-x)/100
@@ -57,16 +57,21 @@ def think(size, mapa,contador):
         return mapa
 
 size = 8
-mapa = crear_mapa(size)
-cont = 0
-
-while True:
-    cont = cont + 1
-    mapa = think(size, mapa,cont)
-    aux = comprobarReinaFin(size, mapa) 
-    if (aux == 0 or cont > 10000):
-        print(cont)
-        print_map(size, mapa)
-        print(aux)
-        break
+cont2= 0
+for i in range(0,100):
+    mapa = crear_mapa(size)
+    cont = 0
+    while True:
+        cont = cont + 1
+        mapa = think(size, mapa,cont)
+        aux = comprobarReinaFin(size, mapa) 
+        if (aux == 0 or cont > 10000):
+            #print(cont)
+            #print_map(size, mapa)
+            #print(aux)
+            if (aux == 0):
+                cont2=cont2+1
+            break  
+        
+print(cont2)
 
