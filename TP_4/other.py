@@ -16,6 +16,20 @@ def crear_mapa(size):
     return map
 
 
+
+def copiarMatriz(size, mapa, val):
+    mapaF = [None] * size
+    for i in range(size):
+        mapaF[i] = [None] * size
+    for i in range(0, size):
+        for j in range(0, size):
+            if (i == val):
+                mapaF[i][j] = 0
+            else:
+                mapaF[i][j] = mapa[i][j]
+    return mapaF
+
+
 def print_map(size, map):
     print("____________________________________________________________________")
     for i in range(0, size):

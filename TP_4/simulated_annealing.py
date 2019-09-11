@@ -3,18 +3,31 @@
 from random import randrange, seed
 from other import *
 
-def minimo(size, mapa):
-    minimo = mapa[0][0]
-    actX = 0
-    actY = 0
-    i = randrange(size)
-    for j in range(0, size):
-        if (mapa[i][j] <= minimo):
-            minimo = mapa[i][j]
-            actX = i
-            actY = j
-    return (actX, actY)
 
+
+def evaluacion(size, mapa):
+    i = randrange(size)
+    j = randrange(size)
+    if (mapa[i][j] == 0):
+        return (i, j)
+    else:
+        return evaluacion(size,mapa)
+
+def probabilidad(mapa,mapaTem,contador):
+    enemigosMap=comprobarReinaFin(size, mapa)
+    enemigosMapTem=comprobarReinaFin(size, mapaTem)
+    if(enemigosMap>enemigosMapTem):
+        return True
+    else:
+        aux= randrange(100)
+        if (aux<funcionProbabilidad(contador)):
+            return False
+        else:
+            return True 
+
+def funcionProbabilidad(x):
+    y = (10000-x)/100
+    return y
 
 def buscar_reina(size, mapa, posY):
     for i in range(0, size):
@@ -32,52 +45,28 @@ def comprobarReinaFin(size, mapa):
     return aux
 
 
-def reinaAmenaza(size, mapa):
-    mapaF = [None] * size
-    for i in range(size):
-        mapaF[i] = [None] * size
-    for i in range(0, size):
-        for j in range(0, size):
-            mapTem = copiarMatriz(size, mapa, i)
-            mapTem[i][j] = 1
-            mapaF[i][j] = comprobarReinaFin(size, mapTem)
-            if (mapa[i][j] == 1):
-                mapaF[i][j] = size*size*size
-    return mapaF
-
-
-def copiarMatriz(size, mapa, val):
-    mapaF = [None] * size
-    for i in range(size):
-        mapaF[i] = [None] * size
-    for i in range(0, size):
-        for j in range(0, size):
-            if (i == val):
-                mapaF[i][j] = 0
-            else:
-                mapaF[i][j] = mapa[i][j]
-    return mapaF
-
-
-def think(size, mapa):
-    mapaEn = reinaAmenaza(size, mapa)
-    (actX, actY) = minimo(size, mapaEn)
+def think(size, mapa,contador):
+    (actX, actY) = evaluacion(size, mapa)
+    mapTem = copiarMatriz(size, mapa, actX)
     i = buscar_reina(size, mapa, actX)
-    mapa[actX][i] = 0
-    mapa[actX][actY] = 1
-    return mapa
+    mapTem[actX][i] = 0
+    mapTem[actX][actY] = 1
+    if (probabilidad(mapa,mapTem,contador)):
+        return mapTem
+    else:
+        return mapa
 
-
-size = 6
+size = 8
 mapa = crear_mapa(size)
 cont = 0
 
 while True:
     cont = cont + 1
-    mapa = think(size, mapa)
+    mapa = think(size, mapa,cont)
     aux = comprobarReinaFin(size, mapa) 
-    if (aux == 0 or cont > 1000):
+    if (aux == 0 or cont > 10000):
         print(cont)
         print_map(size, mapa)
         print(aux)
         break
+

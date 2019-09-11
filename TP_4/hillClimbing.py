@@ -48,18 +48,6 @@ def reinaAmenaza(size, mapa):
     return mapaF
 
 
-def copiarMatriz(size, mapa, val):
-    mapaF = [None] * size
-    for i in range(size):
-        mapaF[i] = [None] * size
-    for i in range(0, size):
-        for j in range(0, size):
-            if (i == val):
-                mapaF[i][j] = 0
-            else:
-                mapaF[i][j] = mapa[i][j]
-    return mapaF
-
 
 def think(size, mapa):
     mapaEn = reinaAmenaza(size, mapa)
@@ -71,15 +59,20 @@ def think(size, mapa):
 
 
 size = 6
-mapa = crear_mapa(size)
-cont = 0
+cont2= 0
+for i in range(0,1000):
+    mapa = crear_mapa(size)
+    cont = 0
+    while True:
+        cont = cont + 1
+        mapa = think(size, mapa)
+        aux = comprobarReinaFin(size, mapa) 
+        if (aux == 0 or cont > 2000):
+            print(cont)
+            #print_map(size, mapa)
+            #print(aux)
+            if (aux == 0):
+                cont2=cont2+1
+            break  
+print(cont2)
 
-while True:
-    cont = cont + 1
-    mapa = think(size, mapa)
-    aux = comprobarReinaFin(size, mapa) 
-    if (aux == 0 or cont > 1000):
-        print(cont)
-        print_map(size, mapa)
-        print(aux)
-        break
