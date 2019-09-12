@@ -15,6 +15,11 @@ def crear_mapa(size):
         map[i][val] = 1
     return map
 
+def crear_vector(size):
+    map = [None] * size
+    for i in range(0, size):
+        map[i] = randrange(size)
+    return map
 
 
 def copiarMatriz(size, mapa, val):

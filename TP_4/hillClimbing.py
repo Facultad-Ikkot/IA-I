@@ -58,9 +58,10 @@ def think(size, mapa):
     return mapa
 
 
-size = 6
+size = 8
 cont2= 0
-for i in range(0,1000):
+total=0
+for i in range(0,100):
     mapa = crear_mapa(size)
     cont = 0
     while True:
@@ -69,10 +70,11 @@ for i in range(0,1000):
         aux = comprobarReinaFin(size, mapa) 
         if (aux == 0 or cont > 2000):
             print(cont)
-            #print_map(size, mapa)
+            print_map(size, mapa)
             #print(aux)
             if (aux == 0):
+                total=total+cont
                 cont2=cont2+1
             break  
-print(cont2)
+print(cont2,total)
 

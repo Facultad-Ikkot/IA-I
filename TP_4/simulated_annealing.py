@@ -4,7 +4,6 @@ from random import randrange, seed
 from other import *
 
 
-
 def evaluacion(size, mapa):
     i = randrange(size)
     j = randrange(size)
@@ -58,6 +57,7 @@ def think(size, mapa,contador):
 
 size = 8
 cont2= 0
+total=0
 for i in range(0,100):
     mapa = crear_mapa(size)
     cont = 0
@@ -66,10 +66,11 @@ for i in range(0,100):
         mapa = think(size, mapa,cont)
         aux = comprobarReinaFin(size, mapa) 
         if (aux == 0 or cont > 10000):
-            #print(cont)
+            print(cont)
             #print_map(size, mapa)
             #print(aux)
             if (aux == 0):
+                total=total+cont
                 cont2=cont2+1
             break  
         
