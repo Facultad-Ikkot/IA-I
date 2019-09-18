@@ -5,10 +5,10 @@ from agentThink import *
 from environment import Environment
 
 
-env1 = Environment(10, 10, 0.3)
+env1 = Environment(8, 8, 0.3)
 agenE = AgentE(env1)
-agenE.think(env1)
-agenE.printF(env1)
+aux=agenE.think(env1)
+agenE.printF(env1,aux)
 
 print("______________________________________________________________________________________")
 

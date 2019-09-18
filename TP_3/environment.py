@@ -4,7 +4,7 @@ import colorPrint
 
 class Environment:
     def __init__(self, sizeX, sizeY, block_rate):
-        #seed(24324)
+        seed(2124324)
         self.rendimiento = 0
         self.functionH = 0
         self.posInitX = randrange(sizeX)
