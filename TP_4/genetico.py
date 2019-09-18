@@ -2,19 +2,25 @@ from random import randrange, seed
 from other import *
 
 
-def generar(size,cantidad):
+def generar(size, cantidad):
     cont = 0
-    poblacion= []
-    fit=[]
+    poblacion = []
+    fit = []
     while True:
-        vect= crear_vector(size)
+        vect = crear_vector(size)
         fit = diagonal(vect)
-        poblacion.append((fit,vect))
+        poblacion.append((fit, vect))
         if (cont == cantidad):
             break
-        cont=cont+1
+        cont = cont+1
     return (poblacion)
-    
+
+
+def diagonal(posActXTem, posActYTem):
+    costX = abs(posActXTem-posEndX)
+    costY = abs(posActYTem-posEndY)
+    costT = costX + costY
+    return costT
 
 
 def enterecruzar(padre1, padre2):
@@ -31,7 +37,7 @@ def enterecruzar(padre1, padre2):
         else:
             hijo[i] = -1
     for i in range(0, longitud):
-        if (hijo[i]==-1):
+        if (hijo[i] == -1):
             while True:
                 valor = padre2.pop(0)
                 aux = hijo.count(valor)
@@ -52,23 +58,20 @@ def mutar(individuo):
 
 
 def printMatriz(matriz):
-    for i in range ( 0,len(matriz)):
+    for i in range(0, len(matriz)):
         print(matriz[i])
-        
 
-def diagonal(vector):
-    return randrange(len(vector))
 
 def seleccionar(pob):
-    new_pob=[]
-    for j in range(0,5):
+    new_pob = []
+    for j in range(0, 5):
         i = randrange(len(pob))
         new_pob.append(pob[i])
     return new_pob
-    
- 
+
+
 size = 8
-poblacion=generar(size,10)
+poblacion = generar(size, 10)
 printMatriz(poblacion)
 
 
@@ -77,5 +80,5 @@ while True:
     print("")
     printMatriz(poblacion)
     #aux =  think(size,10)
-    #printMatriz(aux)
+    # printMatriz(aux)
     break

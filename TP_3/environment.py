@@ -29,44 +29,21 @@ class Environment:
                     self.map[i][j] = 4
                 if (self.posEndX == i and self.posEndY == j):
                     self.map[i][j] = 5
-                
 
-    def accept_action(self, posActXTem,posActYTem):
+    def accept_action(self, posActXTem, posActYTem):
         if ((posActYTem >= 0) and (posActYTem <= self.sizeY-1) and (posActXTem >= 0) and (posActXTem <= self.sizeX-1)):
-            if (self.is_block(posActXTem,posActYTem)):
+            if (self.is_block(posActXTem, posActYTem)):
                 return False
             else:
                 return True
         else:
             return False
 
-    
-
-    def is_block(self, posActXTem,posActYTem):
+    def is_block(self, posActXTem, posActYTem):
         if (self.map[posActXTem][posActYTem] == 1):
             return True
         else:
             return False
-
-    def pase(self):
-        self.map[self.posActX][self.posActY] = 2
-        self.rendimiento = self.rendimiento + 1
-
-    def actualizarPos(self, action):
-        if (action == "L"):
-            self.posActY = self.posActY-1
-        elif (action == "R"):
-            self.posActY = self.posActY+1
-        elif (action == "up"):
-            self.posActX = self.posActX-1
-        elif (action == "down"):
-            self.posActX = self.posActX+1
-        else:
-            pass
-
-    def get_performance(self):
-        print(self.rendimiento)
-        return self.rendimiento
 
     def functioH(self, posActXTem, posActYTem):
         costX = abs(posActXTem-self.posEndX)
@@ -74,7 +51,7 @@ class Environment:
         costT = costX + costY
         return costT
 
-    def print_environment(self,posActXTem,posActYTem):
+    def print_environment(self, posActXTem, posActYTem):
         print("____________________________________________________________________")
         for i in range(0, self.sizeX):
             print("|", end="")
@@ -92,9 +69,3 @@ class Environment:
                         print(self.map[i][j], end="|")
             print("")
         print("____________________________________________________________________")
-
-    def posX(self):
-        return self.posActX
-
-    def posY(self):
-        return self.posActY
