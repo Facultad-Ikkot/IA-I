@@ -55,7 +55,7 @@ def think(size, mapa,contador):
     else:
         return mapa
 
-size = 15
+size = 12
 cont2= 0
 total=0
 for i in range(0,30):

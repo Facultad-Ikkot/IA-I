@@ -19,19 +19,20 @@ def generar(size, cantidad):
 def diagonal(reina1, reina2):
     costX = abs(reina1[0]-reina2[0])
     costY = abs(reina1[1]-reina2[1])
-    if (costX==costY):
+    if (costX == costY):
         return True
     else:
         return False
 
+
 def confrontacionF(vec):
-    cont=0
-    for i in range (0,len(vec)-1):
-        aux=(i,vec[i])
-        for j in range(i+1,len(vec)):
-            aux2=(j,vec[j])
-            if (diagonal(aux,aux2)):
-                cont=cont+1
+    cont = 0
+    for i in range(0, len(vec)-1):
+        aux = (i, vec[i])
+        for j in range(i+1, len(vec)):
+            aux2 = (j, vec[j])
+            if (diagonal(aux, aux2)):
+                cont = cont+1
     return cont
 
 
@@ -47,7 +48,7 @@ def enterecruzar(padre1, padre2Tem):
             cont = cont + 1
         else:
             hijo[i] = -1
-    padre2=padre2Tem.copy()        
+    padre2 = padre2Tem.copy()
     for i in range(0, longitud):
         if (hijo[i] == -1):
             while True:
@@ -57,7 +58,7 @@ def enterecruzar(padre1, padre2Tem):
                     hijo[i] = valor
                     break
     fit = confrontacionF(hijo)
-    return (fit,hijo)
+    return (fit, hijo)
 
 
 def mutar(individuo):
@@ -68,13 +69,48 @@ def mutar(individuo):
     individuo[pos1] = individuo[pos2]
     individuo[pos2] = aux
     fit = confrontacionF(individuo)
-    return (fit,individuo)
+    return (fit, individuo)
 
 
 def printMatriz(matriz):
+
     for i in range(0, len(matriz)):
         print(matriz[i])
     print("________________________________")
+
+
+def print_environment(self, posActXTem, posActYTem):
+    print("____________________________________________________________________")
+    for i in range(0, self.sizeX):
+        print("|", end="")
+        for j in range(0, self.sizeY):
+            if (i == posActXTem and j == posActYTem):
+                print("\033[91m#\033[00m", end="|")
+            else:
+                if (self.map[i][j] == 1):
+                    colorPrint.prCyan("/")
+                elif (self.map[i][j] == 4):
+                    colorPrint.prPurple("S")
+                elif (self.map[i][j] == 5):
+                    colorPrint.prPurple("E")
+                else:
+                    print(self.map[i][j], end="|")
+        print("")
+    print("____________________________________________________________________")
+
+
+def printMatrizVec(vec):
+    si = len(vec)
+    print("____________________________________________________________________")
+    for i in range(0, si):
+        print("|", end="")
+        for j in range(0, si):
+            if (i == vec[j]):
+                print("\033[91m#\033[00m", end="|")
+            else:
+                print("0", end="|")
+        print("")
+    print("____________________________________________________________________")
 
 
 def seleccionar(pob):
@@ -84,39 +120,45 @@ def seleccionar(pob):
         new_pob.append(pob[i])
     return new_pob
 
+
 def think(poblacionTem):
     poblacionAct = seleccionar(poblacionTem)
-    for i in range(0,sizeH):
-        ran1=randrange(sizeH)
-        ran2=randrange(sizeH)
-        hijo=enterecruzar(poblacionAct[ran1][1],poblacionAct[ran2][1])
+    for i in range(0, sizeH):
+        ran1 = randrange(sizeH)
+        ran2 = randrange(sizeH)
+        hijo = enterecruzar(poblacionAct[ran1][1], poblacionAct[ran2][1])
         poblacionAct.append(hijo)
-    for i in range(0,mut):
-        ran1=randrange(sizeH)
-        aux=poblacionAct[ran1]
+    for i in range(0, mut):
+        ran1 = randrange(sizeH)
+        aux = poblacionAct[ran1]
         poblacionAct.remove(aux)
-        hijo=mutar(aux[1])
+        hijo = mutar(aux[1])
         poblacionAct.append(hijo)
     return poblacionAct
 
+
 def minFit(pobl):
-    minFi=100000000000000000000
+    minFi = 1000000000000000000
     for ele in pobl:
-        if (ele[0]<minFi):
-            minFi=ele[0]
-    return minFi
+        if (ele[0] < minFi):
+            minFi = ele[0]
+            minEl = ele[1]
+    return (minFi, minEl)
 
 
-size = 10
-poblacion = generar(size, 10)
-printMatriz(poblacion)
-sizeH= 5
-mut=1 
+size = 12
+poblacionSize = 100
+poblacion = generar(size, poblacionSize)
+# printMatriz(poblacion)
+sizeH = poblacionSize//2
+mut = poblacionSize//100
 
 
 while True:
-    poblacion= think(poblacion)
-    if (minFit(poblacion)==0):
-        printMatriz(poblacion)
+    poblacion = think(poblacion)
+    (minF, eleF) = minFit(poblacion)
+    if (minF == 0):
+        # printMatriz(poblacion)
+        print(eleF)
+        printMatrizVec(eleF)
         break
-
