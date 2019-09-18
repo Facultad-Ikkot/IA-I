@@ -18,7 +18,11 @@ def crear_mapa(size):
 def crear_vector(size):
     map = [None] * size
     for i in range(0, size):
-        map[i] = randrange(size)
+        while True:
+            val = randrange(size)
+            if (not val in map):
+                map[i] = val
+                break
     return map
 
 

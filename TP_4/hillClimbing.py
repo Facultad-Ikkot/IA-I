@@ -58,7 +58,7 @@ def think(size, mapa):
     return mapa
 
 
-size = 8
+size = 15
 cont2= 0
 total=0
 for i in range(0,100):
@@ -68,6 +68,7 @@ for i in range(0,100):
         cont = cont + 1
         mapa = think(size, mapa)
         aux = comprobarReinaFin(size, mapa) 
+        print(cont)
         if (aux == 0 or cont > 2000):
             print(cont)
             print_map(size, mapa)

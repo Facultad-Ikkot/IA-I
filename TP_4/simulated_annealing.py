@@ -55,10 +55,10 @@ def think(size, mapa,contador):
     else:
         return mapa
 
-size = 8
+size = 15
 cont2= 0
 total=0
-for i in range(0,100):
+for i in range(0,30):
     mapa = crear_mapa(size)
     cont = 0
     while True:
