@@ -82,8 +82,15 @@ class AgentETest():
     def show(self, pob):
         rev = []
         aux = reversed(pob)
+        cont = True
         for unity in aux:
-            rev.append(unity[1])
+            if (cont):
+                parent = unity[1]
+                rev.append(unity[1])
+                cont = False
+            if (parent == unity[0]):
+                parent = unity[1]
+                rev.append(unity[1])
         return reversed(rev)
 
     def printF(self, env, pob):
