@@ -1,11 +1,12 @@
-from random import randrange ,seed
+from random import randrange, seed
 import colorPrint
 
 
 class Environment:
     def __init__(self, sizeX, sizeY, block_rate):
-        seed( 24324 )
+        #seed(24324)
         self.rendimiento = 0
+        self.functionH = 0
         self.posInitX = randrange(sizeX)
         self.posInitY = randrange(sizeY)
         self.posEndX = randrange(sizeX)
@@ -24,35 +25,27 @@ class Environment:
                     self.map[i][j] = 1
                 else:
                     self.map[i][j] = 0
+                if (self.posInitX == i and self.posInitY == j):
+                    self.map[i][j] = 4
+                if (self.posEndX == i and self.posEndY == j):
+                    self.map[i][j] = 5
+                
 
-    def accept_action(self, action):
-        if (action == "L"):
-            if (self.posActY-1 >= 0):
-                return True
-            else:
+    def accept_action(self, posActXTem,posActYTem):
+        if ((posActYTem >= 0) and (posActYTem <= self.sizeY-1) and (posActXTem >= 0) and (posActXTem <= self.sizeX-1)):
+            if (self.is_block(posActXTem,posActYTem)):
                 return False
-        if (action == "R"):
-            if (self.posActY+1 <= self.sizeY-1):
-                return True
             else:
-                return False
-        if (action == "up"):
-            if (self.posActX-1 >= 0):
                 return True
-            else:
-                return False
-        if (action == "down"):
-            if (self.posActX+1 <= self.sizeX-1):
-                return True
-            else:
-                return False
+        else:
+            return False
 
-    def is_block(self):
-        if (self.map[self.posActX][self.posActY] == 1):
+    
+
+    def is_block(self, posActXTem,posActYTem):
+        if (self.map[posActXTem][posActYTem] == 1):
             return True
         else:
-            if (self.map[self.posActX][self.posActY] == 0):
-                self.map[self.posActX][self.posActY] = 4
             return False
 
     def pase(self):
@@ -75,18 +68,26 @@ class Environment:
         print(self.rendimiento)
         return self.rendimiento
 
-    def print_environment(self):
+    def functioH(self, posActXTem, posActYTem):
+        costX = abs(posActXTem-self.posEndX)
+        costY = abs(posActYTem-self.posEndY)
+        costT = costX + costY
+        return costT
+
+    def print_environment(self,posActXTem,posActYTem):
         print("____________________________________________________________________")
         for i in range(0, self.sizeX):
             print("|", end="")
             for j in range(0, self.sizeY):
-                if (i == self.posActX and j == self.posActY):
+                if (i == posActXTem and j == posActYTem):
                     print("\033[91m#\033[00m", end="|")
                 else:
-                    if (self.map[i][j] == 2):
-                        colorPrint.prCyan("0")
+                    if (self.map[i][j] == 1):
+                        colorPrint.prCyan("/")
                     elif (self.map[i][j] == 4):
-                        colorPrint.prPurple("0")
+                        colorPrint.prPurple("S")
+                    elif (self.map[i][j] == 5):
+                        colorPrint.prPurple("E")
                     else:
                         print(self.map[i][j], end="|")
             print("")

@@ -48,14 +48,3 @@ class Agent:
     def prespectiveSizeY(self, env):
         return env.sizeY
 
-    def thinkAux(self, env):
-        aux = True
-        if (self.prespective(env)):
-            self.suck(env)
-        if (aux == True):
-            env.print_environment()
-            time.sleep(self.sleepTime)
-        if (self.periodo < 0):
-            return True
-        else:
-            return False

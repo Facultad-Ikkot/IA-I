@@ -1,33 +1,74 @@
 from agent import Agent
 from random import randrange
+import time
 
 
-class AgentConMeoria(Agent):
+class AgentE(Agent):
     def __init__(self, env):
         Agent.__init__(self, env)
-    
-    def comprobarFrontera(self,env):
-        if (env.accept_action("L")):
-            if(self.prespective(env)):
-                 
-        env.accept_action("R")
-        env.accept_action("up")
-        env.accept_action("down")
+        self.poblacion = []
+        self.poblacionRe = []
+        self.poblacionFin = []
+        self.cont = 0
 
-        
+    def comprobarFrontera(self, env, posActXTem, posActYTem):
+        if (env.accept_action(posActXTem+1, posActYTem)):
+            aux = env.functioH(posActXTem+1, posActYTem)
+            item = ((posActXTem+1, posActYTem), aux)
+            if (self.poblacionRe.count(item) == 0):
+                self.poblacion.append(item)
+        if (env.accept_action(posActXTem-1, posActYTem)):
+            aux = env.functioH(posActXTem-1, posActYTem)
+            item = ((posActXTem-1, posActYTem), aux)
+            if (self.poblacionRe.count(item) == 0):
+                self.poblacion.append(item)
+        if (env.accept_action(posActXTem, posActYTem+1)):
+            aux = env.functioH(posActXTem, posActYTem+1)
+            item = ((posActXTem, posActYTem+1), aux)
+            if (self.poblacionRe.count(item) == 0):
+                self.poblacion.append(item)
+        if (env.accept_action(posActXTem, posActYTem-1)):
+            aux = env.functioH(posActXTem, posActYTem-1)
+            item = ((posActXTem, posActYTem-1), aux)
+            if (self.poblacionRe.count(item) == 0):
+                self.poblacion.append(item)
 
-    def think(self,recorridos,acumulado):
-        print("hola")
+    def seleccionar(self):
+        mini = 10000000000000
+        for unity in self.poblacion:
+            if (mini >= unity[1]):
+                mini = unity[1]
+                minEl = unity
+        self.poblacion.remove(minEl)
+        self.poblacionRe.append(minEl)
+        return minEl
 
-    def heuristica(self):
-        print("hola")
-    
-    def distanciaOjetivo(self):
-        None
+    def think(self, env):
+        self.cont=0
+        self.comprobarFrontera(env, env.posInitX, env.posInitY)
+        if (len(self.poblacion)>0):
+            while True:
+                self.cont=self.cont+1
+                ((posX, posY), costH) = self.seleccionar()
+                self.comprobarFrontera(env, posX, posY)
+                self.poblacionFin.append((posX, posY))
+                if (costH == 0):
+                    print("Resultado")
+                    break
+                if (len(self.poblacion) == 0):
+                    print("Sin resultado")
+                    self.poblacionFin=[]
+                    break
+        else:
+            print("Sin resultado")
+            self.poblacionFin=[]
 
-    
-        
+    def printF(self,env):
+        print(self.cont)
+        env.print_environment(env.posInitX,env.posInitY)
+        for unity in self.poblacionFin:
+            time.sleep(0.6)
+            env.print_environment(unity[0],unity[1])
 
-
-    
-
+    def getPoblacion(self):
+        return self.poblacion
