@@ -73,7 +73,6 @@ def mutar(individuo):
 
 
 def printMatriz(matriz):
-
     for i in range(0, len(matriz)):
         print(matriz[i])
     print("________________________________")
@@ -149,16 +148,17 @@ def minFit(pobl):
 size = 12
 poblacionSize = 100
 poblacion = generar(size, poblacionSize)
-# printMatriz(poblacion)
 sizeH = poblacionSize//2
 mut = poblacionSize//100
-
+cont = 0
 
 while True:
+    cont = cont+1
     poblacion = think(poblacion)
     (minF, eleF) = minFit(poblacion)
     if (minF == 0):
         # printMatriz(poblacion)
         print(eleF)
+        print(cont)
         printMatrizVec(eleF)
         break
