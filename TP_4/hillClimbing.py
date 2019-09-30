@@ -2,6 +2,7 @@
 
 from random import randrange, seed
 from other import *
+import time 
 
 
 
@@ -57,11 +58,12 @@ def think(size, mapa):
     mapa[actX][actY] = 1
     return mapa
 
-
-size = 12
+size = 8
 cont2= 0
 total=0
-for i in range(0,100):
+timeInT=time.time()
+for i in range(0,50):
+    timeIn=time.time()
     mapa = crear_mapa(size)
     cont = 0
     while True:
@@ -72,12 +74,15 @@ for i in range(0,100):
         if (aux == 0 or cont > 2000):
             print(cont)
             print_map(size, mapa)
-            #print(aux)
+            print(aux)
             if (aux == 0):
                 total=total+cont
                 cont2=cont2+1
+                timeEn=time.time()
+                print(timeEn-timeIn)
                 print("ok")
                 break
             break  
-print(cont2,total)
+timeEnT=time.time()
+print(cont2,total,timeInT-timeEnT)
 

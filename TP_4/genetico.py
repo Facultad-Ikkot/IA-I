@@ -1,6 +1,6 @@
 from random import randrange, seed
 from other import *
-
+import time
 
 def generar(size, cantidad):
     cont = 0
@@ -145,20 +145,49 @@ def minFit(pobl):
     return (minFi, minEl)
 
 
-size = 12
-poblacionSize = 100
+def genetico():
+    state = False
+    for j in range(0,2000):
+        contTot= contTot +1
+        poblacion = think(poblacion)
+        (minF, eleF) = minFit(poblacion)
+        if (minF == 0):
+            state=True
+            print(eleF)
+            break
+    return state
+
+
+size = 15
+poblacionSize = 200
 poblacion = generar(size, poblacionSize)
 sizeH = poblacionSize//2
 mut = poblacionSize//100
-cont = 0
-
-while True:
-    cont = cont+1
-    poblacion = think(poblacion)
-    (minF, eleF) = minFit(poblacion)
-    if (minF == 0):
-        # printMatriz(poblacion)
-        print(eleF)
-        print(cont)
-        printMatrizVec(eleF)
-        break
+resultados = 0
+contTot=0
+timeInT=time.time()
+for i in range(0,30):
+    poblacion = generar(size, poblacionSize)
+    state = False
+    timeIn=time.time()
+    for j in range(0,3000):
+        contTot= contTot +1;
+        poblacion = think(poblacion)
+        (minF, eleF) = minFit(poblacion)
+        print(minF,j)
+        if (minF == 0):
+            state=True
+            #printMatriz(poblacion)
+            print(eleF)
+            timeEn=time.time()
+            print(j)
+            print(timeEn-timeIn)
+            printMatrizVec(eleF)
+            break
+    if (state==True):
+        resultados = resultados +1
+print("---------------------------------------")
+timeEn=time.time()
+print(resultados)
+print(timeEn-timeInT)
+print(contTot)
