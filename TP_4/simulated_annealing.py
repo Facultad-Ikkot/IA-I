@@ -1,9 +1,10 @@
 # https://docs.google.com/document/d/1Ocz9ZmOkIiVV7kgDguH99cpOWDKuxoKF6hwgtIv_NNQ/edit
 
-from random import randrange, seed
+from random import randrange, seed,random
 from other import *
 import threading
 import time
+from math import exp
 
 
 def evaluacion(size, mapa):
@@ -17,17 +18,20 @@ def evaluacion(size, mapa):
 def probabilidad(mapa,mapaTem,contador):
     enemigosMap=comprobarReinaFin(size, mapa)
     enemigosMapTem=comprobarReinaFin(size, mapaTem)
+    deltaE=enemigosMap-enemigosMapTem;
     if(enemigosMap>enemigosMapTem):
         return True 
     else:
-        aux= randrange(100)
-        if (aux<funcionProbabilidad(contador)):
+        aux= random()
+        h=funcionProbabilidad(contador,deltaE)
+        if (aux<h ):
             return True
         else:
             return False 
 
-def funcionProbabilidad(x):
-    y = (10000-x)/100
+def funcionProbabilidad(x,delta):
+    t = (intentos-x+2)/intentos
+    y = exp(delta/t)
     return y
 
 def buscar_reina(size, mapa, posY):
@@ -58,28 +62,8 @@ def think(size, mapa,contador):
         return mapa
 
 
-
-def test():
-    for i in range(0,20):
-        mapa = crear_mapa(size)
-        cont = 0
-        while True:
-            cont = cont + 1
-            mapa = think(size, mapa,cont)
-            aux = comprobarReinaFin(size, mapa) 
-            if (aux == 0 or cont > 10000):
-                print(cont)
-                #print_map(size, mapa)
-                #print(aux)
-                if (aux == 0):
-                    total=total+cont
-                    cont2=cont2+1
-                break  
-            
-    print(cont2)
-
-
 size = 8
+intentos= 20000
 cont2= 0
 total=0
 timeIn=time.time()
@@ -91,7 +75,7 @@ for i in range(0,30):
         cont = cont + 1
         mapa = think(size, mapa,cont)
         aux = comprobarReinaFin(size, mapa) 
-        if (aux == 0 or cont > 15000):
+        if (aux == 0 or cont > intentos):
             #print_map(size, mapa)
             #print(aux)
             timeEnT=time.time()
