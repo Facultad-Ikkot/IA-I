@@ -158,36 +158,34 @@ def genetico():
     return state
 
 
-size = 15
+size = 12
 poblacionSize = 200
 poblacion = generar(size, poblacionSize)
 sizeH = poblacionSize//2
 mut = poblacionSize//100
 resultados = 0
 contTot=0
-timeInT=time.time()
+timeIn=time.time()
 for i in range(0,30):
     poblacion = generar(size, poblacionSize)
     state = False
-    timeIn=time.time()
+    timeInT=time.time()
     for j in range(0,3000):
         contTot= contTot +1;
         poblacion = think(poblacion)
         (minF, eleF) = minFit(poblacion)
-        print(minF,j)
         if (minF == 0):
             state=True
             #printMatriz(poblacion)
-            print(eleF)
-            timeEn=time.time()
-            print(j)
-            print(timeEn-timeIn)
-            printMatrizVec(eleF)
+            #print(eleF)
+            timeEnT=time.time()
+            print("Estados:", j,"; time:",timeEnT-timeInT)
+            #printMatrizVec(eleF)
             break
     if (state==True):
         resultados = resultados +1
 print("---------------------------------------")
 timeEn=time.time()
-print(resultados)
-print(timeEn-timeInT)
-print(contTot)
+
+print("Resultados correctos:", resultados,"; time final:",timeEn-timeIn)
+print("Estados total:",contTot)

@@ -61,9 +61,9 @@ def think(size, mapa):
 size = 8
 cont2= 0
 total=0
-timeInT=time.time()
+timeIn=time.time()
 for i in range(0,50):
-    timeIn=time.time()
+    timeInT=time.time()
     mapa = crear_mapa(size)
     cont = 0
     while True:
@@ -72,17 +72,17 @@ for i in range(0,50):
         aux = comprobarReinaFin(size, mapa) 
         #print(cont)
         if (aux == 0 or cont > 2000):
-            print(cont)
-            print_map(size, mapa)
-            print(aux)
+            #print_map(size, mapa)
+            timeEnT=time.time()
+            print("Estados:", cont,"; time:",timeEnT-timeInT)
             if (aux == 0):
                 total=total+cont
                 cont2=cont2+1
-                timeEn=time.time()
-                print(timeEn-timeIn)
-                print("ok")
                 break
             break  
-timeEnT=time.time()
-print(cont2,total,timeInT-timeEnT)
+timeEn=time.time()
+
+print("-------------------")
+print("Resultados correctos:", cont2,"; time final:",timeEn-timeIn)
+print("Estados total:",total)
 

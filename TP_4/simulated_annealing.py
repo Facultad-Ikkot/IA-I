@@ -86,20 +86,23 @@ timeIn=time.time()
 for i in range(0,30):
     mapa = crear_mapa(size)
     cont = 0
+    timeInT=time.time()
     while True:
         cont = cont + 1
         mapa = think(size, mapa,cont)
         aux = comprobarReinaFin(size, mapa) 
         if (aux == 0 or cont > 15000):
-            print(cont)
             #print_map(size, mapa)
             #print(aux)
+            timeEnT=time.time()
+            print("Estados:", cont,"; time:",timeEnT-timeInT)
             if (aux == 0):
                 total=total+cont
                 cont2=cont2+1
             break    
 timeEn=time.time()
 print("-------------------")
-print(cont2)
-print(timeEn-timeIn)
+print("Resultados correctos:", cont2,"; time final:",timeEn-timeIn)
+print("Estados total:",total)
+
 
