@@ -63,15 +63,17 @@ def think(size, mapa,contador):
 
 
 size = 8
-intentos= 20000
+intentos= 30000
 cont2= 0
 total=0
 timeIn=time.time()
 listaEl = []
+print(size)
 for i in range(0,30):
     mapa = crear_mapa(size)
     cont = 0
     timeInT=time.time()
+    print(i)
     while True:
         cont = cont + 1
         mapa = think(size, mapa,cont)
@@ -81,7 +83,6 @@ for i in range(0,30):
             #print(aux)
             timeEnT=time.time()
             listaEl.append((cont,timeEnT-timeInT))
-            print("Estados:", cont,"; time:",timeEnT-timeInT)
             if (aux == 0):
                 total=total+cont
                 cont2=cont2+1
@@ -90,5 +91,13 @@ timeEn=time.time()
 print("-------------------")
 print("Resultados correctos:", cont2,"; time final:",timeEn-timeIn)
 print("Estados total:",total)
+
+print("---------------------------------------")
+for i in range(0,30):
+    print(listaEl[i][0])
+
+print("---------------------------------------")
+for i in range(0,30):
+    print(listaEl[i][1])
 
 

@@ -169,12 +169,13 @@ contTot=0
 timeIn=time.time()
 listaEl = []
 listaT = []
+print(size)
 for i in range(0,30):
     poblacion = generar(size, poblacionSize)
     state = False
     timeInT=time.time()
     print(i)
-    for j in range(0,4000):
+    for j in range(0,5000):
         contTot= contTot +1;
         poblacion = think(poblacion)
         (minF, eleF) = minFit(poblacion)
@@ -183,9 +184,7 @@ for i in range(0,30):
             state=True
             #printMatriz(poblacion)
             #print(eleF)
-            
             #print(j)
-
             #print(timeEnT-timeInT)
             #printMatrizVec(eleF)
             break
@@ -201,7 +200,6 @@ timeEn=time.time()
 print("Resultados correctos:", resultados,"; time final:",timeEn-timeIn)
 print("Estados total:",contTot)
 
-print(listaEl)
 print("---------------------------------------")
 for i in range(0,30):
     print(listaEl[i][0])
