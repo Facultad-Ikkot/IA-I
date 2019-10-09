@@ -1,6 +1,7 @@
 from random import randrange, seed
 from other import *
 import time
+import csv
 
 def generar(size, cantidad):
     cont = 0
@@ -158,7 +159,7 @@ def genetico():
     return state
 
 
-size = 12
+size = 15
 poblacionSize = 200
 poblacion = generar(size, poblacionSize)
 sizeH = poblacionSize//2
@@ -166,26 +167,46 @@ mut = poblacionSize//100
 resultados = 0
 contTot=0
 timeIn=time.time()
+listaEl = []
+listaT = []
 for i in range(0,30):
     poblacion = generar(size, poblacionSize)
     state = False
     timeInT=time.time()
-    for j in range(0,3000):
+    print(i)
+    for j in range(0,4000):
         contTot= contTot +1;
         poblacion = think(poblacion)
         (minF, eleF) = minFit(poblacion)
+        timeEnT=time.time()
         if (minF == 0):
             state=True
             #printMatriz(poblacion)
             #print(eleF)
-            timeEnT=time.time()
-            print("Estados:", j,"; time:",timeEnT-timeInT)
+            
+            #print(j)
+
+            #print(timeEnT-timeInT)
             #printMatrizVec(eleF)
             break
     if (state==True):
         resultados = resultados +1
+    listaEl.append((j,timeEnT-timeInT))
+ 
+
+
 print("---------------------------------------")
 timeEn=time.time()
 
 print("Resultados correctos:", resultados,"; time final:",timeEn-timeIn)
 print("Estados total:",contTot)
+
+print(listaEl)
+print("---------------------------------------")
+for i in range(0,30):
+    print(listaEl[i][0])
+
+print("---------------------------------------")
+for i in range(0,30):
+    print(listaEl[i][1])
+

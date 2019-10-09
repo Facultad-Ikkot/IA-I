@@ -67,6 +67,7 @@ intentos= 20000
 cont2= 0
 total=0
 timeIn=time.time()
+listaEl = []
 for i in range(0,30):
     mapa = crear_mapa(size)
     cont = 0
@@ -79,6 +80,7 @@ for i in range(0,30):
             #print_map(size, mapa)
             #print(aux)
             timeEnT=time.time()
+            listaEl.append((cont,timeEnT-timeInT))
             print("Estados:", cont,"; time:",timeEnT-timeInT)
             if (aux == 0):
                 total=total+cont
