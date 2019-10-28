@@ -1,4 +1,4 @@
-# IA TP 5
+
 # Búsqueda Local 
 Este trabajo practico se realizó respondiendo estas [consignas](https://docs.google.com/document/d/1Ocz9ZmOkIiVV7kgDguH99cpOWDKuxoKF6hwgtIv_NNQ/edit)
 
@@ -22,4 +22,4 @@ En la siguente tabla se muestra la comparacion de los promedios y desviaciones e
 El algoritmo mas adecuado para la solucion es el simulated ya que obtiene un muy buen resultado en un tiempo significativamente menor. Esta diferencia se nota mas entre mayor sea el tablero.
 
 ## Exel utilizado
-Este [Exel](https://1drv.ms/x/s!AnY8wEw8J95nhaoJ7RVpUzP_dBI_Jg)
+[Exel](https://1drv.ms/x/s!AnY8wEw8J95nhaoJ7RVpUzP_dBI_Jg)
